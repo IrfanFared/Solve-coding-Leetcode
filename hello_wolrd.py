@@ -1,27 +1,38 @@
-def is_palindrome_int(n: int) -> bool:
+def roman_to_int(s: str) -> int:
     """
-    Mengecek apakah sebuah bilangan bulat adalah palindrom.
+    Mengonversi angka Romawi ke bilangan bulat.
 
     Args:
-        n: Bilangan bulat yang akan dicek.
+        s: String yang merepresentasikan angka Romawi.
 
     Returns:
-        True jika bilangan adalah palindrom, False jika tidak.
+        Representasi bilangan bulat dari angka Romawi.
     """
-    # Menangani kasus bilangan negatif (palindrom hanya untuk non-negatif)
-    if n < 0:
-        return False
+    roman_map = {
+        'I': 1,
+        'V': 5,
+        'X': 10,
+        'L': 50,
+        'C': 100,
+        'D': 500,
+        'M': 1000
+    }
 
-    # 1. Ubah bilangan bulat menjadi string
-    s = str(n)
+    total = 0
+    n = len(s)
 
-    # 2. Balik string
-    # Python memungkinkan pembalikan string dengan slicing [::-1]
-    s_reversed = s[::-1]
+    # Iterasi melalui string angka Romawi
+    for i in range(n):
+        current_value = roman_map[s[i]]
 
-    # 3. Bandingkan string asli dengan string yang dibalik
-    return s == s_reversed
+        # Memeriksa kasus pengurangan (subtractive cases)
+        # Jika nilai saat ini lebih kecil dari nilai berikutnya, kurangkan.
+        # Contoh: IV = 5 - 1 = 4, IX = 10 - 1 = 9
+        if i + 1 < n and current_value < roman_map[s[i+1]]:
+            total -= current_value
+        else:
+            # Jika tidak, tambahkan nilai saat ini ke total.
+            total += current_value
+    return total
 
-# Contoh penggunaan:
-print(f"121 adalah palindrom? {is_palindrome_int(121)}")        # Output: 121 adalah palindrom? True
-      # Output: -121 adalah palindrom? False (menurut definisi, palindrom biasanya non-negatif)
+print(roman_to_int("IV"))
