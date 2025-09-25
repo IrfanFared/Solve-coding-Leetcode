@@ -20,4 +20,4 @@ class Solution:
         return total
     
 solusi1 = Solution()
-print(solusi1.romanToInt("IV"))
+print(solusi1.romanToInt("LVIII"))
